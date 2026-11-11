@@ -3,16 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Calendario dell'Avvento 2026</title>
+  <title>Giulendario dell'Avvento 2026</title>
 
   <!-- Meta tag PWA & Mobile Fullscreen -->
   <meta name="theme-color" content="#0f172a">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Avvento 2026">
+  <meta name="apple-mobile-web-app-title" content="Giulendario">
   
+
+
+  <link rel="icon" href="./assets/favicon.ico" sizes="48x48 32x32 16x16">
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/apple-touch-icon.png">
   <link rel="manifest" href="./manifest.json">
-  <link rel="apple-touch-icon" href="./assets/01.jpg">
 
   <!-- Google Fonts: Playfair Display (titoli eleganti) & Plus Jakarta Sans (UI leggibile) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,12 +34,12 @@
   <!-- Banner visibile solo se la modalità debug è attiva via URL -->
   <div id="debug-banner" class="debug-banner hidden">
     <span id="debug-status">🔧 DEBUG MODE</span>
-    <button id="btn-reset-storage" type="button">Reset Aperture</button>
+    <button id="btn-reset-storage" type="button">Reset & Rimescola</button>
   </div>
 
   <header class="app-header">
     <div class="header-badge">1 – 24 DICEMBRE 2026</div>
-    <h1 class="app-title">Calendario dell'Avvento</h1>
+    <h1 class="app-title">Giulendario dell'Avvento</h1>
     <p id="current-date-display" class="app-subtitle">Ogni giorno una piccola sorpresa</p>
     
     <!-- Barra di progresso aperture -->
@@ -50,7 +55,7 @@
   </header>
 
   <main class="main-container">
-    <!-- Griglia 24 caselle generata dinamicamente da app.js -->
+    <!-- Griglia 24 caselle mescolate generata dinamicamente da app.js -->
     <div id="calendar-grid" class="calendar-grid"></div>
   </main>
 

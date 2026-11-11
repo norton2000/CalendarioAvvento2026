@@ -1,45 +1,45 @@
 /**
  * ============================================================================
- * CONFIGURAZIONE GENERALE & CONTENUTI DELLE 24 CASELLE
+ * CONFIGURAZIONE GENERALE & CONTENUTI DELLE 24 CASELLE (GIULENDARIO 2026)
  * ============================================================================
- * Per usare le tue immagini locali:
- * 1. Inserisci le foto nella cartella /assets/ (consigliato formato .webp o .jpg, 800x600px)
- * 2. Sostituisci il campo `image` con "./assets/day-1.jpg"
- * 3. Se un giorno non prevede un codice alfanumerico, imposta `code: ""` o `code: null`
- *    e il box del codice verrà nascosto automaticamente nel modal.
+ * - SHUFFLE_GRID: impostato a `true` mescola i numeri da 1 a 24 usando
+ *   l'algoritmo Fisher-Yates e salva la disposizione nel localStorage, così
+ *   le caselle non cambiano posizione a ogni refresh o apertura.
  */
 
 const CONFIG = {
   TARGET_YEAR: 2026,
   TARGET_MONTH: 11, // Nota JS Date: 0 = Gennaio, 11 = Dicembre
-  STORAGE_KEY: 'advent_calendar_2026_opened_days'
+  SHUFFLE_GRID: true,
+  STORAGE_KEY: 'giulendario_2026_opened_days',
+  ORDER_STORAGE_KEY: 'giulendario_2026_grid_order'
 };
 
 const CALENDAR_DATA = [
-  { day: 1,  title: "Si comincia!", image: "./assets/01.jpg",  message: "Buon 1° Dicembre! Inizia il conto alla rovescia verso il Natale con il primo piccolo pensiero per te.", code: "NATALE-01" },
-  { day: 2,  title: "Dolce pausa", image: "./assets/02.jpg",  message: "Oggi ti meriti cinque minuti tutti per te prima di iniziare la giornata.", code: "PAUSA-02" },
-  { day: 3,  title: "Piccola magia", image: "./assets/03.jpg",  message: "Un dettaglio speciale per strapparti un sorriso anche a metà settimana.", code: "SORRISO-03" },
-  { day: 4,  title: "Ricarica di energia", image: "https://picsum.photos/seed/adv4/600/450",  message: "Manca poco al weekend! Ecco il tuo indizio per il regalo di oggi.", code: "ENERGIA-04" },
-  { day: 5,  title: "Spirito di festa", image: "https://picsum.photos/seed/adv5/600/450",  message: "Le luci iniziano ad accendersi: apri il pacchetto numero 5!", code: "LUCI-05" },
-  { day: 6,  title: "Coccola invernale", image: "https://picsum.photos/seed/adv6/600/450",  message: "Perfetto per una giornata fredda di dicembre.", code: "COCCOLA-06" },
-  { day: 7,  title: "Un tocco di colore", image: "https://picsum.photos/seed/adv7/600/450",  message: "Qualcosa di utile e super colorato per le tue giornate.", code: "COLORE-07" },
-  { day: 8,  title: "Festa dell'Immacolata", image: "https://picsum.photos/seed/adv8/600/450",  message: "Giornata di festa e relax! Goditi la sorpresa numero 8.", code: "FESTA-08" },
-  { day: 9,  title: "Piccolo pensiero", image: "https://picsum.photos/seed/adv9/600/450",  message: "Non servono grandi occasioni per festeggiare insieme.", code: "PENSIERO-09" },
-  { day: 10, title: "Siamo in doppia cifra!", image: "https://picsum.photos/seed/adv10/600/450", message: "Giorno 10 sbloccato: riscatta il tuo premio con questo codice!", code: "DECIMO-10" },
-  { day: 11, title: "Sorpresa del venerdì", image: "https://picsum.photos/seed/adv11/600/450", message: "Per chiudere la settimana nel modo migliore possibile.", code: "VENERDI-11" },
-  { day: 12, title: "Metà percorso!", image: "https://picsum.photos/seed/adv12/600/450", message: "Siamo esattamente a metà del nostro Calendario dell'Avvento!", code: "META-12" },
-  { day: 13, title: "Santa Lucia", image: "https://picsum.photos/seed/adv13/600/450", message: "Il giorno più corto che ci sia... ma con una sorpresa in più.", code: "LUCIA-13" },
-  { day: 14, title: "Nuova settimana", image: "https://picsum.photos/seed/adv14/600/450", message: "Un boost di buonumore per affrontare questo lunedì di dicembre.", code: "LUNEDI-14" },
-  { day: 15, title: "Meno dieci a Natale", image: "https://picsum.photos/seed/adv15/600/450", message: "Il conto alla rovescia entra nel vivo!", code: "MENODIECI-15" },
-  { day: 16, title: "Dettaglio prezioso", image: "https://picsum.photos/seed/adv16/600/450", message: "Un piccolo accessorio pensato appositamente per te.", code: "PREZIOSO-16" },
-  { day: 17, title: "Quasi vacanza", image: "https://picsum.photos/seed/adv17/600/450", message: "Tieni duro, le vacanze di Natale sono dietro l'angolo!", code: "VACANZA-17" },
-  { day: 18, title: "Serata speciale", image: "https://picsum.photos/seed/adv18/600/450", message: "Questo codice vale per un momento speciale insieme.", code: "SERATA-18" },
-  { day: 19, title: "Ultimo weekend prima di Natale", image: "https://picsum.photos/seed/adv19/600/450", message: "Atmosfera natalizia al 100%: scopri cosa ti aspetta oggi.", code: "WEEKEND-19" },
-  { day: 20, title: "Domenica d'Avvento", image: "https://picsum.photos/seed/adv20/600/450", message: "Mancano solo 4 giorni alla Vigilia!", code: "DOMENICA-20" },
-  { day: 21, title: "Solstizio d'Inverno", image: "https://picsum.photos/seed/adv21/600/450", message: "Inizia ufficialmente l'inverno, scaldiamolo con il regalo n. 21.", code: "INVERNO-21" },
-  { day: 22, title: "Ultime sorprese", image: "https://picsum.photos/seed/adv22/600/450", message: "Ormai ci siamo quasi, goditi il regalo di oggi!", code: "ULTIME-22" },
-  { day: 23, title: "Antivigilia", image: "https://picsum.photos/seed/adv23/600/450", message: "Domani è la Vigilia! Preparati con la penultima casella.", code: "VIGILIA-23" },
-  { day: 24, title: "Buona Vigilia di Natale! 🎄", image: "https://picsum.photos/seed/adv24/600/450", message: "Siamo arrivati all'ultima casella! Buon Natale amore mio ❤️", code: "GRANFINALE-24" }
+  { day: 1,  title: "Si comincia!", image: "./assets/01.png",  message: "Buon 1° Dicembre! Inizia il conto alla rovescia verso il Natale con la prima casella del tuo Giulendario.", code: "NATALE-01" },
+  { day: 2,  title: "Dolce pausa", image: "./assets/02.png",  message: "Oggi ti meriti cinque minuti tutti per te prima di iniziare la giornata.", code: "PAUSA-02" },
+  { day: 3,  title: "Piccola magia", image: "./assets/03.png",  message: "Un dettaglio speciale per strapparti un sorriso anche a metà settimana.", code: "SORRISO-03" },
+  { day: 4,  title: "Ricarica di energia", image: "https://picsum.photos/seed/giu4/600/450",  message: "Manca poco al weekend! Ecco il tuo indizio per il regalo di oggi.", code: "ENERGIA-04" },
+  { day: 5,  title: "Spirito di festa", image: "https://picsum.photos/seed/giu5/600/450",  message: "Le luci iniziano ad accendersi: apri il pacchetto numero 5!", code: "LUCI-05" },
+  { day: 6,  title: "Coccola invernale", image: "https://picsum.photos/seed/giu6/600/450",  message: "Perfetto per una giornata fredda di dicembre.", code: "COCCOLA-06" },
+  { day: 7,  title: "Un tocco di colore", image: "https://picsum.photos/seed/giu7/600/450",  message: "Qualcosa di utile e super colorato per le tue giornate.", code: "COLORE-07" },
+  { day: 8,  title: "Festa dell'Immacolata", image: "https://picsum.photos/seed/giu8/600/450",  message: "Giornata di festa e relax! Goditi la sorpresa numero 8.", code: "FESTA-08" },
+  { day: 9,  title: "Piccolo pensiero", image: "https://picsum.photos/seed/giu9/600/450",  message: "Non servono grandi occasioni per festeggiare insieme.", code: "PENSIERO-09" },
+  { day: 10, title: "Siamo in doppia cifra!", image: "https://picsum.photos/seed/giu10/600/450", message: "Giorno 10 sbloccato: riscatta il tuo premio con questo codice!", code: "DECIMO-10" },
+  { day: 11, title: "Sorpresa del venerdì", image: "https://picsum.photos/seed/giu11/600/450", message: "Per chiudere la settimana nel modo migliore possibile.", code: "VENERDI-11" },
+  { day: 12, title: "Metà percorso!", image: "https://picsum.photos/seed/giu12/600/450", message: "Siamo esattamente a metà del nostro Giulendario dell'Avvento!", code: "META-12" },
+  { day: 13, title: "Santa Lucia", image: "https://picsum.photos/seed/giu13/600/450", message: "Il giorno più corto che ci sia... ma con una sorpresa in più.", code: "LUCIA-13" },
+  { day: 14, title: "Nuova settimana", image: "https://picsum.photos/seed/giu14/600/450", message: "Un boost di buonumore per affrontare questo lunedì di dicembre.", code: "LUNEDI-14" },
+  { day: 15, title: "Meno dieci a Natale", image: "https://picsum.photos/seed/giu15/600/450", message: "Il conto alla rovescia entra nel vivo!", code: "MENODIECI-15" },
+  { day: 16, title: "Dettaglio prezioso", image: "https://picsum.photos/seed/giu16/600/450", message: "Un piccolo accessorio pensato appositamente per te.", code: "PREZIOSO-16" },
+  { day: 17, title: "Quasi vacanza", image: "https://picsum.photos/seed/giu17/600/450", message: "Tieni duro, le vacanze di Natale sono dietro l'angolo!", code: "VACANZA-17" },
+  { day: 18, title: "Serata speciale", image: "https://picsum.photos/seed/giu18/600/450", message: "Questo codice vale per un momento speciale insieme.", code: "SERATA-18" },
+  { day: 19, title: "Ultimo weekend prima di Natale", image: "https://picsum.photos/seed/giu19/600/450", message: "Atmosfera natalizia al 100%: scopri cosa ti aspetta oggi.", code: "WEEKEND-19" },
+  { day: 20, title: "Domenica d'Avvento", image: "https://picsum.photos/seed/giu20/600/450", message: "Mancano solo 4 giorni alla Vigilia!", code: "DOMENICA-20" },
+  { day: 21, title: "Solstizio d'Inverno", image: "https://picsum.photos/seed/giu21/600/450", message: "Inizia ufficialmente l'inverno, scaldiamolo con il regalo n. 21.", code: "INVERNO-21" },
+  { day: 22, title: "Ultime sorprese", image: "https://picsum.photos/seed/giu22/600/450", message: "Ormai ci siamo quasi, goditi il regalo di oggi!", code: "ULTIME-22" },
+  { day: 23, title: "Antivigilia", image: "https://picsum.photos/seed/giu23/600/450", message: "Domani è la Vigilia! Preparati con la penultima casella.", code: "VIGILIA-23" },
+  { day: 24, title: "Buona Vigilia di Natale! 🎄", image: "https://picsum.photos/seed/giu24/600/450", message: "Siamo arrivati all'ultima casella del Giulendario! Buon Natale amore mio ❤️", code: "GRANFINALE-24" }
 ];
 
 /**
@@ -47,9 +47,10 @@ const CALENDAR_DATA = [
  * STATO DELL'APPLICAZIONE & ENGINE DELLA DATA
  * ============================================================================
  */
-class AdventApp {
+class GiulendarioApp {
   constructor() {
     this.openedDays = this.loadOpenedDays();
+    this.gridOrder = this.loadOrGenerateGridOrder();
     this.debugConfig = this.parseUrlDebugParams();
     this.effectiveDate = this.getEffectiveDate();
     this.activeToastTimeout = null;
@@ -80,6 +81,43 @@ class AdventApp {
     this.renderGrid();
     this.bindEvents();
     this.registerServiceWorker();
+  }
+
+  /**
+   * Carica l'ordine mescolato delle 24 caselle da localStorage, oppure ne
+   * genera uno nuovo con algoritmo Fisher-Yates e lo salva.
+   */
+  loadOrGenerateGridOrder() {
+    if (!CONFIG.SHUFFLE_GRID) {
+      return CALENDAR_DATA.map((d) => d.day);
+    }
+
+    try {
+      const savedOrder = window.localStorage.getItem(CONFIG.ORDER_STORAGE_KEY);
+      if (savedOrder) {
+        const parsed = JSON.parse(savedOrder);
+        if (Array.isArray(parsed) && parsed.length === CALENDAR_DATA.length) {
+          return parsed;
+        }
+      }
+    } catch (e) {
+      console.warn('Impossibile leggere ordine griglia da localStorage:', e);
+    }
+
+    // Fisher-Yates Shuffle (distribuzione uniforme senza bias)
+    const days = CALENDAR_DATA.map((d) => d.day);
+    for (let i = days.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [days[i], days[j]] = [days[j], days[i]];
+    }
+
+    try {
+      window.localStorage.setItem(CONFIG.ORDER_STORAGE_KEY, JSON.stringify(days));
+    } catch (e) {
+      console.warn('Impossibile salvare ordine griglia in localStorage:', e);
+    }
+
+    return days;
   }
 
   /**
@@ -154,12 +192,17 @@ class AdventApp {
     }
   }
 
+  /**
+   * In modalità Debug, azzera sia le caselle aperte sia la disposizione della griglia
+   */
   resetOpenedDays() {
     this.openedDays = [];
     window.localStorage.removeItem(CONFIG.STORAGE_KEY);
+    window.localStorage.removeItem(CONFIG.ORDER_STORAGE_KEY);
+    this.gridOrder = this.loadOrGenerateGridOrder();
     this.renderGrid();
     this.updateHeaderInfo();
-    this.showToast('🔄 Stato caselle azzerato!');
+    this.showToast('🔄 Caselle azzerate e griglia rimescolata!');
   }
 
   /**
@@ -197,15 +240,17 @@ class AdventApp {
   }
 
   /**
-   * Renderizza le 24 caselle nella griglia coi 3 stati visivi:
-   * - locked: Giorno futuro
-   * - unlockable: Giorno corrente o passato non ancora aperto
-   * - opened: Già aperta (salvata in LocalStorage)
+   * Renderizza le 24 caselle seguendo l'ordine mescolato salvato in `this.gridOrder`
    */
   renderGrid() {
     this.gridEl.innerHTML = '';
 
-    CALENDAR_DATA.forEach((item) => {
+    // Mappa l'array di numeri mescolati sugli oggetti corrispondenti di CALENDAR_DATA
+    const orderedItems = this.gridOrder
+      .map((dayNum) => CALENDAR_DATA.find((item) => item.day === dayNum))
+      .filter(Boolean);
+
+    orderedItems.forEach((item) => {
       const isOpened = this.openedDays.includes(item.day);
       const canUnlock = this.isDayUnlockable(item.day);
 
@@ -245,19 +290,16 @@ class AdventApp {
    */
   handleCardClick(item, cardEl, canUnlock, wasAlreadyOpened) {
     if (!canUnlock) {
-      // Feedback aptico su Android (ignorato silenziosamente su iOS)
       if (navigator.vibrate) navigator.vibrate([40, 60, 40]);
 
-      // Ri-triggera l'animazione CSS di shake
       cardEl.classList.remove('shake');
       void cardEl.offsetWidth; // Forza reflow per riavviare l'animazione
       cardEl.classList.add('shake');
 
-      this.showToast(`⏳ Pazienza! Questa casella si sbloccherà il ${item.day} Dicembre.`);
+      this.showToast(`⏳ Pazienza! Questa casella del Giulendario si sblocca il ${item.day} Dicembre.`);
       return;
     }
 
-    // Se è la prima volta che viene aperta, salva su LocalStorage e lancia i coriandoli
     if (!wasAlreadyOpened) {
       if (navigator.vibrate) navigator.vibrate(80);
       this.saveOpenedDay(item.day);
@@ -300,19 +342,16 @@ class AdventApp {
   bindEvents() {
     this.modalCloseBtn.addEventListener('click', () => this.closeModal());
 
-    // Chiudi cliccando fuori dalla card del modal
     this.modalEl.addEventListener('click', (e) => {
       if (e.target === this.modalEl) this.closeModal();
     });
 
-    // Chiudi con tasto ESC
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && !this.modalEl.classList.contains('hidden')) {
         this.closeModal();
       }
     });
 
-    // Copia negli appunti il codice regalo
     this.copyCodeBtn.addEventListener('click', async () => {
       const code = this.modalCodeValueEl.textContent;
       try {
@@ -326,7 +365,7 @@ class AdventApp {
   }
 
   /**
-   * Lancia l'effetto coriandoli natalizi (oro, rosso, verde) alla prima apertura
+   * Lancia l'effetto coriandoli natalizi alla prima apertura
    */
   triggerConfetti() {
     if (typeof window.confetti === 'function') {
@@ -340,7 +379,7 @@ class AdventApp {
   }
 
   /**
-   * Mostra una notifica Toast temporanea (con debounce per evitare spam)
+   * Mostra una notifica Toast temporanea
    */
   showToast(message) {
     const container = document.getElementById('toast-container');
@@ -373,5 +412,5 @@ class AdventApp {
 
 // Avvia l'applicazione al caricamento del DOM
 document.addEventListener('DOMContentLoaded', () => {
-  new AdventApp();
+  new GiulendarioApp();
 });
